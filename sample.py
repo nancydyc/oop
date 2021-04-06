@@ -35,7 +35,31 @@ class Employee:
 
 class Developer(Employee):
     raise_amount = 1111
-    pass
+    
+    def __init__(self, first, last, pay, prog_lang):
+        super().__init__(first, last, pay)
+        self.prog_lang = prog_lang
+
+class Manager(Employee):
+
+    def __init__(self, first, last, pay, employees=None):
+        super().__init__(first, last, pay)
+        if employees is None:
+            self.employees = []
+        else:
+            self.employees = employees
+
+    def add_emp(self, emp):
+        if emp not in self.employees:
+            self.employees.append(emp)
+
+    def remove_emp(self, emp):
+        if emp in self.employees:
+            self.employees.remove(emp)
+
+    def manage_emps(self):
+        for emp in self.employees:
+            print('-->', emp.fullname())
 
 
 emp_1 = Employee("Nancy", "Dai", 6666)
@@ -84,10 +108,23 @@ print("Go to work? ", Employee.is_worday(date_2))
 
 print("====================================================================================\n")
 # inheritance
-dev_1 = Developer('DT', 'Wu', 88000)
-dev_2 = Developer('DJ', 'Song', 99000)
-print(dev_1.email, dev_2.email)
+dev_1 = Developer('DT', 'Wu', 88000, 'Python')
+dev_2 = Developer('DJ', 'Song', 99000, 'Java')
+print(dev_1.email, dev_1.prog_lang )
+print(dev_2.email, dev_2.prog_lang)
 
 print(dev_1.pay)
 dev_1.apply_raise()
 print(dev_1.pay)
+
+mgr_1 = Manager('Xian', 'Lee', 120000, [dev_1])
+print(mgr_1.fullname(), mgr_1.email)
+mgr_1.add_emp(dev_2)
+mgr_1.manage_emps()
+print("New report line after removing dev 1:")
+mgr_1.remove_emp(dev_1)
+mgr_1.manage_emps()
+
+print(isinstance(mgr_1, Employee)) # True
+print(isinstance(mgr_1, Developer)) # False
+print(issubclass(Developer, Employee)) # True
