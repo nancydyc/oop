@@ -11,7 +11,7 @@ class Employee:
         
         Employee.number_of_emps += 1 
         # not using self because we don't have use case wanting to change the number based on each employee
-        
+
     def fullname(self):
         return self.first + " " + self.last
 
@@ -80,8 +80,8 @@ print(emp_1.__dict__) # namespace for this instance
 print(emp_1.email) # preperty
 print("Employee 1: ", emp_1.fullname()) # method
 
-# print("====================================================================================")
-# use class variable
+print("====================================================================================")
+# Use class variable
 emp_1.apply_raise()
 print("Adjust raise for emp_1: ", emp_1.pay)
 emp_1.raise_amount = 0.88 # overwrite the classmethod
@@ -94,8 +94,8 @@ print("Employee 2: ", emp_2.fullname())
 print(Employee.number_of_emps)
 
 # print("====================================================================================")
-# use classmethod
-print("Original base raise", Employee.raise_amount)
+# Use classmethod
+print("Original base r# # aise", Employee.raise_amount)
 Employee.set_raise_amt(0.99)
 print("New raise amount for all emps", Employee.raise_amount)
 emp_3 = Employee("Tony", "Cai", 9999)
@@ -113,14 +113,14 @@ new_employee_11 = Employee.from_string(emp_str_11)
 print("New employee 11:", new_employee_11.fullname(), new_employee_11.email, new_employee_11.pay)
 
 print("====================================================================================\n")
-# use staticmethod
+# Use staticmethod
 date_1 = datetime.date(2021, 4, 1) # Thr
 date_2 = datetime.date(2021, 4, 4) # Sun
 print("Go to work? ", Employee.is_worday(date_1))
 print("Go to work? ", Employee.is_worday(date_2))
 
 print("====================================================================================\n")
-# inheritance
+# Inheritance
 dev_1 = Developer('DT', 'Wu', 88000, 'Python')
 dev_2 = Developer('DJ', 'Song', 99000, 'Java')
 print(dev_1.email, dev_1.prog_lang )
@@ -143,7 +143,7 @@ print(isinstance(mgr_1, Developer)) # False
 print(issubclass(Developer, Employee)) # True
 
 # print("====================================================================================\n")
-# special methods
+# Special methods
 print(repr(emp_1))
 print(str(emp_1))
 # same as above
