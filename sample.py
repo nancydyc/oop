@@ -18,6 +18,18 @@ class Employee:
     def apply_raise(self):
         self.pay = self.pay + self.raise_amount
 
+    def __repr__(self):
+        return f"Employee({self.first}, {self.last}, {self.pay})"
+
+    def __str__(self):
+        return f"{self.fullname()} - {self.email}"
+
+    def __add__(self, other):
+        return self.pay + other.pay
+
+    def __len__(self):
+        return len(self.fullname())
+
     @classmethod
     def set_raise_amt(cls, amount):
         cls.raise_amount = amount
@@ -32,6 +44,7 @@ class Employee:
         if date.weekday() == 5 or date.weekday() == 6:
             return False
         return True
+
 
 class Developer(Employee):
     raise_amount = 1111
@@ -67,7 +80,7 @@ print(emp_1.__dict__) # namespace for this instance
 print(emp_1.email) # preperty
 print("Employee 1: ", emp_1.fullname()) # method
 
-print("====================================================================================")
+# print("====================================================================================")
 # use class variable
 emp_1.apply_raise()
 print("Adjust raise for emp_1: ", emp_1.pay)
@@ -80,7 +93,7 @@ emp_2 = Employee("Wenhong", "Hu", 8888)
 print("Employee 2: ", emp_2.fullname())
 print(Employee.number_of_emps)
 
-print("====================================================================================")
+# print("====================================================================================")
 # use classmethod
 print("Original base raise", Employee.raise_amount)
 Employee.set_raise_amt(0.99)
@@ -128,3 +141,17 @@ mgr_1.manage_emps()
 print(isinstance(mgr_1, Employee)) # True
 print(isinstance(mgr_1, Developer)) # False
 print(issubclass(Developer, Employee)) # True
+
+# print("====================================================================================\n")
+# special methods
+print(repr(emp_1))
+print(str(emp_1))
+# same as above
+print(emp_1.__repr__())
+print(emp_1.__str__())
+
+print(emp_1.__add__(emp_2))
+print(emp_1.__len__())
+# above and below are the same
+print(emp_1 + emp_2)
+print(len(emp_1))
