@@ -14,13 +14,18 @@ class TrafficLight:
 
     Design a deadlock-free traffic light controlled system at this intersection.
 
-    Implement the function void carArrived(carId, roadId, direction, turnGreen, crossCar) where:
-
+    Implement the function carArrived(carId, roadId, direction, turnGreen, crossCar) where:
     carId is the id of the car that arrived.
     roadId is the id of the road that the car travels on.
     direction is the direction of the car.
     turnGreen is a function you can call to turn the traffic light to green on the current road.
     crossCar is a function you can call to let the current car cross the intersection.
+
+    Example 1:
+    Input: cars = [1,3,5,2,4], directions = [2,1,2,4,3], arrivalTimes = [10,20,30,40,50]
+
+    Example 2:
+    Input: cars = [1,2,3,4,5], directions = [2,4,3,3,1], arrivalTimes = [10,20,30,40,40]
 
         >>> main([1,3,5,2,4], [2,1,2,4,3], [10,20,30,40,50])
         Car 1 Has Passed Road A In Direction 2
