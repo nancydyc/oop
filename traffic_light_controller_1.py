@@ -1,3 +1,5 @@
+
+
 class TrafficLight:
     """
     There is an intersection of two roads. First road is road A where cars travel from North to South in direction 1 and from South to North in direction 2. 
@@ -9,8 +11,8 @@ class TrafficLight:
     Red means cars in both directions cannot cross the intersection and must wait until the light turns green.
     The traffic lights cannot be green on both roads at the same time. That means when the light is green on road A, it is red on road B and when the light is green on road B, it is red on road A.
 
-    Initially, we don't know which road has green light on.
-
+    Initially, the traffic light is green on road A and red on road B.
+     
     When the light is green on one road, all cars can cross the intersection in both directions until the light becomes green on the other road.
     No two cars traveling on different roads should cross at the same time.
 
@@ -86,7 +88,7 @@ def main(cars, directions, arrivalTimes):
     for i in range(len(cars)):        
         roadId = get_roadId(directions[i])
         if i == 0:
-            prev_roadId = roadId
+            prev_roadId = 1 # initially, green light is on Road A
         else:
             prev_roadId = get_roadId(directions[i-1])
         
