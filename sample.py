@@ -30,6 +30,11 @@ class Employee:
     def __len__(self):
         return len(self.fullname())
 
+    # Using regular method for self like below, only apply to one instance, not a whole class,
+    # This change won't be inherited by subclass
+    # def set_raise_amt(self, amount):
+    #     self.raise_amount = amount
+
     @classmethod
     def set_raise_amt(cls, amount):
         cls.raise_amount = amount
@@ -74,6 +79,9 @@ class Manager(Employee):
         for emp in self.employees:
             print('-->', emp.fullname())
 
+    def apply_raise(self):
+        self.pay = (self.pay + self.raise_amount) * 1.5 # Override parent class apply_raise method
+
 
 emp_1 = Employee("Nancy", "Dai", 6666)
 print(emp_1.__dict__) # namespace for this instance
@@ -93,10 +101,10 @@ emp_2 = Employee("Wenhong", "Hu", 8888)
 print("Employee 2: ", emp_2.fullname())
 print(Employee.number_of_emps)
 
-# print("====================================================================================")
+print("====================================================================================")
 # Use classmethod
 print("Original base r# # aise", Employee.raise_amount)
-Employee.set_raise_amt(0.99)
+Employee.set_raise_amt(0.99) # same as Employee.raise_amount = 0.99
 print("New raise amount for all emps", Employee.raise_amount)
 emp_3 = Employee("Tony", "Cai", 9999)
 print("Adjust raise for new emp_3", emp_3.raise_amount)
@@ -142,7 +150,7 @@ print(isinstance(mgr_1, Employee)) # True
 print(isinstance(mgr_1, Developer)) # False
 print(issubclass(Developer, Employee)) # True
 
-# print("====================================================================================\n")
+print("====================================================================================\n")
 # Special methods
 print(repr(emp_1))
 print(str(emp_1))
@@ -155,3 +163,21 @@ print(emp_1.__len__())
 # above and below are the same
 print(emp_1 + emp_2)
 print(len(emp_1))
+
+print("========================================Override methods============================================\n")
+# Override methods
+emp_4 = Employee("David", "Tang", 145000)
+print("Emp 4's original pay", emp_4.pay)
+print(emp_4.raise_amount)
+Employee.set_raise_amt(5000)
+# Employee.raise_amount = 5000 # same as above
+# emp_4.set_raise_amt(5000) # Only override one instance's raise_amount using regular self method intead of classmethod
+print("Override class method raise_amount:", emp_4.raise_amount)
+emp_4.apply_raise()
+print("Emp 4's new pay", emp_4.pay)
+
+new_manager = Manager("Buffulo", "Smith", 165000)
+print("New manager's initial pay:", new_manager.pay)
+print("New manager's raise:", new_manager.raise_amount)
+new_manager.apply_raise()
+print("New manager's new pay after overriding employee's apply_raise:", new_manager.pay)
