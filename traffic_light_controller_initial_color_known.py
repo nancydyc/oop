@@ -49,53 +49,56 @@ class TrafficLight:
         Car 5 Has Passed Road A In Direction 1
 
     """
-    def __init__(self, roadId, prev_roadId, carId, direction):
-        self.prev_roadId = prev_roadId
-        self.roadId = roadId
-        self.carId = carId
-        self.direction = direction
-
-    def turnGreen(self):
-        if self.roadId == 1:
+    def __init__(self):
+        # Initial state: light_1 on Road A is green, light_2 on Road B is red.
+        self.light_1 = "Green"
+        self.light_2 = "Red"
+    
+    def turnGreen(self, roadId):
+        self.light_1, self.light_2 = self.light_2, self.light_1
+        if roadId == 1:
             print(f"Traffic Light On Road A Is Green") 
         else:
             print(f"Traffic Light On Road B Is Green")
-            
-            
-    def crossCar(self):
-        if self.roadId == 1:
-            print(f"Car {self.carId} Has Passed Road A In Direction {self.direction}")
+        
+    @staticmethod
+    def crossCar(carId, roadId, direction):
+        if roadId == 1:
+            print(f"Car {carId} Has Passed Road A In Direction {direction}")
         else:
-            print(f"Car {self.carId} Has Passed Road B In Direction {self.direction}")
-    
+            print(f"Car {carId} Has Passed Road B In Direction {direction}")
+
     def carArrived(
         self,
         carId: int,                      # ID of the car
         roadId: int,                     # ID of the road the car travels on. Can be 1 (road A) or 2 (road B)
         direction: int,                  # Direction of the car
     ) -> None:
-        if self.prev_roadId != roadId:
-            self.turnGreen()     
-        self.crossCar()
-        
+        # The first car check if the light is green on its road.
+        # If the light is green, call crossCar method to pass
+        # Otherwise, call the turnGreen method first
+        # when the light turns from red to green, call crossCar method to go
+        if roadId == 1:
+            if self.light_1 == "Red":
+                self.turnGreen(roadId)
+            self.crossCar(carId, roadId, direction)
+        else:
+            if self.light_2 == "Red":
+                self.turnGreen(roadId)
+            self.crossCar(carId, roadId, direction)
 
-def get_roadId(direction): 
+def get_roadId(direction):
     return 1 if direction in {1, 2} else 2
-        
+
 def main(cars, directions, arrivalTimes):   
+    controller = TrafficLight()
     for i in range(len(cars)):        
         roadId = get_roadId(directions[i])
-        if i == 0:
-            prev_roadId = 1 # initially, green light is on Road A
-        else:
-            prev_roadId = get_roadId(directions[i-1])
-        
-        traffic_lgt = TrafficLight(roadId, prev_roadId, cars[i], directions[i])
-        traffic_lgt.carArrived(cars[i],
-                               roadId,
-                               directions[i],
-                               )
-        prev_roadId = roadId
+        controller.carArrived(
+            cars[i],      
+            roadId,       
+            directions[i],
+        )
         
 
 if __name__ == "__main__":
